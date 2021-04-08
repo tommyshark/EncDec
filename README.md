@@ -5,4 +5,4 @@ A Python program for quick and easy text encryption and decryption using differe
 Not many methods have been added so far, but the project will evolve.
 
 In order to start it, enter:
-'python3 encdec.py'
+`python3 encdec.py`

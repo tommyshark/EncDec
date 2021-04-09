@@ -180,6 +180,26 @@
       <string>URL</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Reverser</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Hex</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Binary</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Caesar</string>
+     </property>
+    </item>
    </widget>
    <widget class="QPushButton" name="btnClear">
     <property name="geometry">

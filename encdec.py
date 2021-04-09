@@ -1,6 +1,7 @@
 import sys, os
 import base64
 import urllib.parse
+import binascii
 from PyQt5.QtCore import Qt
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QPalette
@@ -8,7 +9,7 @@ from PyQt5.QtGui import *
 
 import design
 
-version = '0.1.5'
+version = '0.1.6'
 
 class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 	def __init__(self):
@@ -58,10 +59,50 @@ class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 				self.textToEncrypt = self.plainTextEdit.toPlainText()
 				self.encryptedText = self.urlencode(self.textToEncrypt)
 				self.plainTextEdit_2.setPlainText(self.encryptedText)
+			elif self.method == "Reverser":
+				self.textToReverse = self.plainTextEdit.toPlainText()
+				self.reversedText = self.textToReverse[::-1]
+				self.plainTextEdit_2.setPlainText(self.reversedText)
+			elif self.method == "Hex":
+				self.textToEncrypt = self.plainTextEdit.toPlainText()
+				self.text_bytes = self.textToEncrypt.encode('ascii')
+				self.encryptedText = binascii.hexlify(self.text_bytes)
+				self.bytes_text = self.encryptedText.decode('ascii')
+				self.plainTextEdit_2.setPlainText(self.bytes_text)
+			elif self.method == "Binary":
+				self.textToEncrypt = self.plainTextEdit.toPlainText()
+				self.encryptedText = ''.join(format(ord(i), '08b') for i in self.textToEncrypt)
+				self.plainTextEdit_2.setPlainText(self.encryptedText)
+			elif self.method == "Caesar":
+				textToEncrypt = self.plainTextEdit.toPlainText()
+				LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+				key = 13
+				textToEncrypt = textToEncrypt.upper()
+				translated = ''
+				for symbol in textToEncrypt:
+					if symbol in LETTERS:
+						num = LETTERS.find(symbol)
+						num = num + key
+						if num >= len(LETTERS):
+							num = num - len(LETTERS)
+						elif num < 0:
+							num = num + len(LETTERS)
+						translated = translated + LETTERS[num]
+						
+					else:
+						translated = translated + symbol
+				self.plainTextEdit_2.setPlainText(translated)
 				
 		except Exception:
 			pass
-		
+	
+	
+	def BinaryToDecimal(self, binary):
+         
+		string = int(binary, 2)
+      
+		return string
+	
 	def decryptText(self):
 		try:
 			if self.method == "Base64":
@@ -92,6 +133,43 @@ class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 				self.textToDecrypt = self.plainTextEdit_2.toPlainText()
 				self.decryptedText = self.urldecode(self.textToDecrypt)
 				self.plainTextEdit.setPlainText(self.decryptedText)
+			elif self.method == "Reverse":
+				self.textToReverse = self.plainTextEdit_2.toPlainText()
+				self.reversedText = self.textToReverse[::-1]
+				self.plainTextEdit.setPlainText(self.reversedText)
+			elif self.method == "Hex":
+				self.textToDecrypt = self.plainTextEdit_2.toPlainText()
+				self.text_bytes = self.textToDecrypt.encode('ascii')
+				self.decryptedText = binascii.unhexlify(self.text_bytes)
+				self.bytes_text = self.decryptedText.decode('ascii')
+				self.plainTextEdit.setPlainText(self.bytes_text)
+			elif self.method == "Binary":
+				binary_int = int(self.plainTextEdit_2.toPlainText(), 2)
+				byte_number = binary_int.bit_length() + 7 // 8
+				binary_array = binary_int.to_bytes(byte_number, "big")
+				ascii_text = binary_array.decode()
+				self.plainTextEdit.setPlainText(ascii_text)
+				print(ascii_text)
+			elif self.method == "Caesar":
+				textToDecrypt = self.plainTextEdit_2.toPlainText()
+				LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+				key = 13
+				textToDecrypt = textToDecrypt.upper()
+				translated = ''
+				for symbol in textToDecrypt:
+					if symbol in LETTERS:
+						num = LETTERS.find(symbol)
+						num = num - key
+						if num >= len(LETTERS):
+							num = num - len(LETTERS)
+						elif num < 0:
+							num = num + len(LETTERS)
+						translated = translated + LETTERS[num]
+						
+					else:
+						translated = translated + symbol
+				self.plainTextEdit.setPlainText(translated)
+
 				
 		except Exception:
 			pass

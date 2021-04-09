@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'panic.ui'
+# Form implementation generated from reading ui file 'design.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -76,6 +76,10 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
         self.btnClear = QtWidgets.QPushButton(self.centralwidget)
         self.btnClear.setGeometry(QtCore.QRect(340, 150, 91, 34))
         font = QtGui.QFont()
@@ -106,4 +110,8 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(3, _translate("MainWindow", "Base16"))
         self.comboBox.setItemText(4, _translate("MainWindow", "Base85"))
         self.comboBox.setItemText(5, _translate("MainWindow", "URL"))
+        self.comboBox.setItemText(6, _translate("MainWindow", "Reverser"))
+        self.comboBox.setItemText(7, _translate("MainWindow", "Hex"))
+        self.comboBox.setItemText(8, _translate("MainWindow", "Binary"))
+        self.comboBox.setItemText(9, _translate("MainWindow", "Caesar"))
         self.btnClear.setText(_translate("MainWindow", "Clear"))

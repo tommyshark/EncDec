@@ -10,3 +10,5 @@ In order to start it, enter:
 `python3 encdec.py`
 
 You can create a launcher in your Desktop with this command to quickly start it.
+
+![encdec](https://github.com/tommyshark/EncDec/assets/72814569/b19f7a42-78be-4552-bd06-faf27f97850a)

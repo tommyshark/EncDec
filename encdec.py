@@ -9,7 +9,7 @@ from PyQt5.QtGui import *
 
 import design
 
-version = '0.1.6'
+version = '0.2.0'
 
 class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 	def __init__(self):
@@ -59,6 +59,10 @@ class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 				self.textToEncrypt = self.plainTextEdit.toPlainText()
 				self.encryptedText = self.urlencode(self.textToEncrypt)
 				self.plainTextEdit_2.setPlainText(self.encryptedText)
+			elif self.method == "URL fully":
+				self.textToEncrypt = self.plainTextEdit.toPlainText()
+				self.encryptedText = self.urlencodefull(self.textToEncrypt)
+				self.plainTextEdit_2.setPlainText(self.encryptedText)
 			elif self.method == "Reverser":
 				self.textToReverse = self.plainTextEdit.toPlainText()
 				self.reversedText = self.textToReverse[::-1]
@@ -92,11 +96,111 @@ class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 					else:
 						translated = translated + symbol
 				self.plainTextEdit_2.setPlainText(translated)
+			elif self.method == "Xml/Html encoding":
+				self.textToEncrypt = self.plainTextEdit.toPlainText()
+				self.encryptedText = self.encrypthexadecimalcharacterreference(self.textToEncrypt)
+				self.plainTextEdit_2.setPlainText(self.encryptedText)
 				
 		except Exception:
 			pass
 	
-	
+	def encrypthexadecimalcharacterreference(self, t):
+		xml_html_dict = {
+				"&#x30;": "0",
+				"&#x31;": "1",
+				"&#x32;": "2",
+				"&#x33;": "3",
+				"&#x34;": "4",
+				"&#x35;": "5",
+				"&#x36;": "6",
+				"&#x37;": "7",
+				"&#x38;": "8",
+				"&#x39;": "9",
+				"&#x41;": "A",
+				"&#x42;": "B",
+				"&#x43;": "C",
+				"&#x44;": "D",
+				"&#x45;": "E",
+				"&#x46;": "F",
+				"&#x47;": "G",
+				"&#x48;": "H",
+				"&#x49;": "I",
+				"&#x4A;": "J",
+				"&#x4B;": "K",
+				"&#x4C;": "L",
+				"&#x4D;": "M",
+				"&#x4F;": "O",
+				"&#x50;": "P",
+				"&#x51;": "Q",
+				"&#x52;": "R",
+				"&#x53;": "S",
+				"&#x54;": "T",
+				"&#x55;": "U",
+				"&#x56;": "V",
+				"&#x57;": "W",
+				"&#x58;": "X",
+				"&#x59;": "Y",
+				"&#x5A;": "Z",
+				"&#x61;": "a",
+				"&#x62;": "b",
+				"&#x63;": "c",
+				"&#x64;": "d",
+				"&#x65;": "e",
+				"&#x66;": "f",
+				"&#x67;": "g",
+				"&#x68;": "h",
+				"&#x69;": "i",
+				"&#x6A;": "j",
+				"&#x6B;": "k",
+				"&#x6C;": "l",
+				"&#x6D;": "m",
+				"&#x6E;": "n",
+				"&#x6F;": "o",
+				"&#x70;": "p",
+				"&#x71;": "q",
+				"&#x72;": "r",
+				"&#x73;": "s",
+				"&#x74;": "t",
+				"&#x75;": "u",
+				"&#x76;": "v",
+				"&#x77;": "w",
+				"&#x78;": "x",
+				"&#x79;": "y",
+				"&#x7A;": "z",
+				"&#x3B;": ";",
+				"&#x3A;": ":",
+				"&#x2D;": "-",
+				"&#x2E;": ".",
+				"&#x2C;": ",",
+				"&#x27;": "'",
+				"&#x22;": '"',
+				"&#x21;": "!",
+				"&#x40;": "@",
+				"&#x23;": "#",
+				"&#x24;": "$",
+				"&#x25;": "%",
+				"&#x5E;": "^",
+				"&#x26;": "&",
+				"&#x2A;": "*",
+				"&#x28;": "(",
+				"&#x29;": ")",
+				"&#x3D;": "=",
+				"&#x2B;": "+",
+				"&#x2F;": "/",
+				"&#x5C;": "\\",
+				"&#x60;": "`",
+				"&#x7E;": "~",
+		}
+		enctext = ""
+		for i in t:
+			for k, v in xml_html_dict.items():
+				if v == i:
+					enctext += k
+					break
+			else:
+				enctext += i
+		return enctext
+		
 	def BinaryToDecimal(self, binary):
          
 		string = int(binary, 2)
@@ -130,6 +234,10 @@ class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 				self.base85_text2 = self.base85_bytes2.decode('ascii')
 				self.plainTextEdit.setPlainText(self.base85_text2)
 			elif self.method == "URL":
+				self.textToDecrypt = self.plainTextEdit_2.toPlainText()
+				self.decryptedText = self.urldecode(self.textToDecrypt)
+				self.plainTextEdit.setPlainText(self.decryptedText)
+			elif self.method == "URL fully":
 				self.textToDecrypt = self.plainTextEdit_2.toPlainText()
 				self.decryptedText = self.urldecode(self.textToDecrypt)
 				self.plainTextEdit.setPlainText(self.decryptedText)
@@ -169,16 +277,130 @@ class EncDec(QtWidgets.QMainWindow, design.Ui_MainWindow):
 					else:
 						translated = translated + symbol
 				self.plainTextEdit.setPlainText(translated)
+			elif self.method == "Xml/Html encoding":
+				self.textToDecrypt = self.plainTextEdit_2.toPlainText()
+				self.decryptedText = self.decrypthexadecimalcharacterreference(self.textToDecrypt)
+				self.plainTextEdit.setPlainText(self.decryptedText)
 
 				
 		except Exception:
 			pass
-			
+	
+	def decrypthexadecimalcharacterreference(self, t):
+		dectext = ""
+		i = 0
+		while i < len(t):
+			if t[i] == "&" and i + 5 < len(t) and t[i+1] == "#" and t[i+5] == ";":
+				key = t[i:i+6]
+				xml_html_dict2 = {
+						"&#x30;": "0",
+						"&#x31;": "1",
+						"&#x32;": "2",
+						"&#x33;": "3",
+						"&#x34;": "4",
+						"&#x35;": "5",
+						"&#x36;": "6",
+						"&#x37;": "7",
+						"&#x38;": "8",
+						"&#x39;": "9",
+						"&#x41;": "A",
+						"&#x42;": "B",
+						"&#x43;": "C",
+						"&#x44;": "D",
+						"&#x45;": "E",
+						"&#x46;": "F",
+						"&#x47;": "G",
+						"&#x48;": "H",
+						"&#x49;": "I",
+						"&#x4A;": "J",
+						"&#x4B;": "K",
+						"&#x4C;": "L",
+						"&#x4D;": "M",
+						"&#x4F;": "O",
+						"&#x50;": "P",
+						"&#x51;": "Q",
+						"&#x52;": "R",
+						"&#x53;": "S",
+						"&#x54;": "T",
+						"&#x55;": "U",
+						"&#x56;": "V",
+						"&#x57;": "W",
+						"&#x58;": "X",
+						"&#x59;": "Y",
+						"&#x5A;": "Z",
+						"&#x61;": "a",
+						"&#x62;": "b",
+						"&#x63;": "c",
+						"&#x64;": "d",
+						"&#x65;": "e",
+						"&#x66;": "f",
+						"&#x67;": "g",
+						"&#x68;": "h",
+						"&#x69;": "i",
+						"&#x6A;": "j",
+						"&#x6B;": "k",
+						"&#x6C;": "l",
+						"&#x6D;": "m",
+						"&#x6E;": "n",
+						"&#x6F;": "o",
+						"&#x70;": "p",
+						"&#x71;": "q",
+						"&#x72;": "r",
+						"&#x73;": "s",
+						"&#x74;": "t",
+						"&#x75;": "u",
+						"&#x76;": "v",
+						"&#x77;": "w",
+						"&#x78;": "x",
+						"&#x79;": "y",
+						"&#x7A;": "z",
+						"&#x3B;": ";",
+						"&#x3A;": ":",
+						"&#x2D;": "-",
+						"&#x2E;": ".",
+						"&#x2C;": ",",
+						"&#x27;": "'",
+						"&#x22;": '"',
+						"&#x21;": "!",
+						"&#x40;": "@",
+						"&#x23;": "#",
+						"&#x24;": "$",
+						"&#x25;": "%",
+						"&#x5E;": "^",
+						"&#x26;": "&",
+						"&#x2A;": "*",
+						"&#x28;": "(",
+						"&#x29;": ")",
+						"&#x3D;": "=",
+						"&#x2B;": "+",
+						"&#x2F;": "/",
+						"&#x5C;": "\\",
+						"&#x60;": "`",
+						"&#x7E;": "~",
+				}
+				if key in xml_html_dict2:
+					dectext += xml_html_dict2[key]
+					i += 6
+				else:
+					dectext += t[i]
+					i += 1
+			else:
+				dectext += t[i]
+				i += 1
+		return dectext
+		
 	def urlencode(self, t):
 		return urllib.parse.quote(t)
+	
+	def urlencodefull(self, t):
+		encoded_text = ''
+		for char in t:
+			encoded_text += '%' + '{:02X}'.format(ord(char))
+		return encoded_text
 		
 	def urldecode(self, t):
 		return urllib.parse.unquote(t)
+	
 		
 	def Clear(self):
 		self.plainTextEdit_2.clear()

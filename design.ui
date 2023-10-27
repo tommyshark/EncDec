@@ -150,6 +150,9 @@
       <height>32</height>
      </rect>
     </property>
+    <property name="maxVisibleItems">
+     <number>10</number>
+    </property>
     <item>
      <property name="text">
       <string>Not set</string>
@@ -182,6 +185,11 @@
     </item>
     <item>
      <property name="text">
+      <string>URL fully</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>Reverser</string>
      </property>
     </item>
@@ -198,6 +206,11 @@
     <item>
      <property name="text">
       <string>Caesar</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Xml/Html encoding</string>
      </property>
     </item>
    </widget>

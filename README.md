@@ -3,6 +3,7 @@ GUI for encrypting and decrypting text using different methods, such as Base, UR
 
 A Linux Python program for quick and easy text encryption and decryption using different methods. 
 Not many methods have been added so far, but the project will evolve.
+This can be useful when you need to quickly and without lags encrypt a small text or decrypt it, instead of writing in the terminal manually or going to a website.
 
 In order to start it, enter:
 
